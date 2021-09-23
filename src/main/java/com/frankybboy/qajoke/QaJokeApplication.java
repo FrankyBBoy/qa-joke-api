@@ -9,5 +9,4 @@ public class QaJokeApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(QaJokeApplication.class, args);
 	}
-
 }
