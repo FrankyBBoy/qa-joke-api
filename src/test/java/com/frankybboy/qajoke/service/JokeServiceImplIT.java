@@ -17,7 +17,6 @@ import java.util.List;
 @DataJpaTest
 public class JokeServiceImplIT {
 
-    private static final Long JOKE_ID_1 = 1L;
     private static final String JOKE_QUESTION_1 = "My question 1?";
     private static final String JOKE_ANSWER_1 = "My answer 1!";
     private static final String JOKE_QUESTION_2 = "My question 2?";
