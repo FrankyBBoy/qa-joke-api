@@ -2,6 +2,7 @@ package com.frankybboy.qajoke.service;
 
 import com.frankybboy.qajoke.dto.JokeDto;
 import com.frankybboy.qajoke.mapper.JokeMapper;
+import com.frankybboy.qajoke.mapper.JokeMapperImpl;
 import com.frankybboy.qajoke.model.Joke;
 import com.frankybboy.qajoke.repository.JokeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +30,7 @@ class JokeServiceImplTest {
     @Mock
     JokeRepository jokeRepository;
 
-    JokeMapper jokeMapper = JokeMapper.INSTANCE;
+    JokeMapper jokeMapper = new JokeMapperImpl();
 
     JokeServiceImpl underTest;
 
