@@ -7,7 +7,6 @@ import com.frankybboy.qajoke.repository.JokeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,6 +17,8 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -67,7 +68,17 @@ class JokeServiceImplTest {
 
     @Test
     void getJokeByIdNotFound() {
-        // TODO implements
+        // given
+        when(jokeRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        // when
+        Exception exception = assertThrows(ResponseStatusException.class, () -> {
+            underTest.getJokeById(1L);
+        });
+
+        // then
+        assertNotNull(exception);
+        assertEquals("404 NOT_FOUND \"Joke not found\"", exception.getMessage());
     }
 
     @Test
@@ -87,13 +98,64 @@ class JokeServiceImplTest {
 
     @Test
     void saveJoke() {
+        // given
+        Long jokeId = 1L;
+        JokeDto jokeToUpdate = JokeDto.builder().question(JOKE_QUESTION).build();
+        Joke savedJoke = Joke.builder().id(jokeId).question(JOKE_QUESTION).build();
+        when(jokeRepository.save(any())).thenReturn(savedJoke);
+
+        // when
+        JokeDto result = underTest.saveJoke(jokeId, jokeToUpdate);
+
+        // then
+        assertNotNull(result);
+        assertEquals(JOKE_QUESTION, result.getQuestion());
     }
 
     @Test
     void patchJoke() {
+        // given
+        Long jokeId = 1L;
+        String jokeAnswer = "My answer...";
+        JokeDto jokeToUpdate = JokeDto.builder().question(JOKE_QUESTION).build();
+        Joke actualJoke = Joke.builder().answer(jokeAnswer).build();
+        Joke savedJoke = Joke.builder().id(jokeId).answer(jokeAnswer).question(JOKE_QUESTION).build();
+        when(jokeRepository.findById(jokeId)).thenReturn(Optional.of(actualJoke));
+        when(jokeRepository.save(any())).thenReturn(savedJoke);
+
+        // when
+        JokeDto result = underTest.patchJoke(jokeId, jokeToUpdate);
+
+        // then
+        assertNotNull(result);
+        assertEquals(jokeAnswer, result.getAnswer());
+        assertEquals(JOKE_QUESTION, result.getQuestion());
+    }
+
+    @Test
+    void patchJokeNotFound() {
+        // given
+        when(jokeRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        // when
+        Exception exception = assertThrows(ResponseStatusException.class, () -> {
+            underTest.patchJoke(1L, JokeDto.builder().build());
+        });
+
+        // then
+        assertNotNull(exception);
+        assertEquals("404 NOT_FOUND \"Joke not found\"", exception.getMessage());
     }
 
     @Test
     void deleteJokeById() {
+        // given
+        Long jokeId = 1L;
+
+        // when
+        underTest.deleteJokeById(jokeId);
+
+        // then
+        verify(jokeRepository).deleteById(jokeId);
     }
 }
