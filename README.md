@@ -1,3 +1,4 @@
+[![CircleCI](https://circleci.com/gh/FrankyBBoy/qa-joke-api/tree/main.svg?style=svg)](https://circleci.com/gh/FrankyBBoy/qa-joke-api/tree/main)
 # qa-joke-api
 Simple question&amp;answer joke API
 
