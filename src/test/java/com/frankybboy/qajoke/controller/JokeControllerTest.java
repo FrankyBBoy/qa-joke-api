@@ -30,6 +30,13 @@ class JokeControllerTest extends AbstractRestControllerTest{
     private static final String JOKE_QUESTION = "My question?";
     private static final String JOKE_ANSWER = "My answer!";
 
+    private static final String INVALID_VALUE = "TOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" +
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" +
+            "LONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" +
+            "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" +
+            "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN" +
+            "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG";
+
     JokeDto simpleJoke;
 
     @Mock
@@ -89,6 +96,28 @@ class JokeControllerTest extends AbstractRestControllerTest{
     }
 
     @Test
+    void givenInvalidQuestion_whenCreateNewJoke_thenReturnBadRequest() throws Exception {
+        JokeDto invalidJoke = JokeDto.builder().question(INVALID_VALUE).build();
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post(JokeController.BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(invalidJoke)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void givenInvalidAnswer_whenCreateNewJoke_thenReturnBadRequest() throws Exception {
+        JokeDto invalidJoke = JokeDto.builder().answer(INVALID_VALUE).build();
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post(JokeController.BASE_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(invalidJoke)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void updateJoke() throws Exception {
         JokeDto jokeToUpdate = JokeDto.builder().build();
         when(jokeService.saveJoke(anyLong(), any())).thenReturn(simpleJoke);
@@ -103,6 +132,28 @@ class JokeControllerTest extends AbstractRestControllerTest{
     }
 
     @Test
+    void givenInvalidQuestion_whenUpdateJoke_thenReturnBadRequest() throws Exception {
+        JokeDto invalidJoke = JokeDto.builder().question(INVALID_VALUE).build();
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put(JokeController.BASE_URL + "/" + JOKE_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(invalidJoke)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void givenInvalidAnswer_whenUpdateJoke_thenReturnBadRequest() throws Exception {
+        JokeDto invalidJoke = JokeDto.builder().answer(INVALID_VALUE).build();
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put(JokeController.BASE_URL + "/" + JOKE_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(invalidJoke)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void patchJoke() throws Exception {
         JokeDto jokeToPatch = JokeDto.builder().build();
         when(jokeService.patchJoke(anyLong(), any())).thenReturn(simpleJoke);
@@ -114,6 +165,28 @@ class JokeControllerTest extends AbstractRestControllerTest{
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.question", equalTo(JOKE_QUESTION)))
                 .andExpect(jsonPath("$.answer", equalTo(JOKE_ANSWER)));
+    }
+
+    @Test
+    void givenInvalidQuestion_whenPatchJoke_thenReturnBadRequest() throws Exception {
+        JokeDto invalidJoke = JokeDto.builder().question(INVALID_VALUE).build();
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .patch(JokeController.BASE_URL + "/" + JOKE_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(invalidJoke)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void givenInvalidAnswer_whenPatchJoke_thenReturnBadRequest() throws Exception {
+        JokeDto invalidJoke = JokeDto.builder().answer(INVALID_VALUE).build();
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .patch(JokeController.BASE_URL + "/" + JOKE_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(invalidJoke)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

@@ -6,6 +6,8 @@ import com.frankybboy.qajoke.service.JokeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(JokeController.BASE_URL)
 public class JokeController {
@@ -30,17 +32,17 @@ public class JokeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public JokeDto createNewJoke(@RequestBody JokeDto jokeDto) {
+    public JokeDto createNewJoke(@Valid @RequestBody JokeDto jokeDto) {
         return jokeService.createJoke(jokeDto);
     }
 
     @PutMapping("/{id}")
-    public JokeDto updateJoke(@PathVariable Long id, @RequestBody JokeDto jokeDto) {
+    public JokeDto updateJoke(@PathVariable Long id, @Valid @RequestBody JokeDto jokeDto) {
         return jokeService.saveJoke(id, jokeDto);
     }
 
     @PatchMapping("/{id}")
-    public JokeDto patchJoke(@PathVariable Long id, @RequestBody JokeDto jokeDto) {
+    public JokeDto patchJoke(@PathVariable Long id, @Valid @RequestBody JokeDto jokeDto) {
         return jokeService.patchJoke(id, jokeDto);
     }
 
