@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface JokeMapper {
 
-    JokeDto jokeToJokeDto(Joke joke);
+  JokeDto jokeToJokeDto(Joke joke);
 
-    Joke jokeDtoToJoke(JokeDto jokeDto);
+  Joke jokeDtoToJoke(JokeDto jokeDto);
 }
