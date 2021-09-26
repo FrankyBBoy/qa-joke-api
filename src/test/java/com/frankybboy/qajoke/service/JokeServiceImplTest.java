@@ -2,12 +2,12 @@ package com.frankybboy.qajoke.service;
 
 import com.frankybboy.qajoke.dto.JokeDto;
 import com.frankybboy.qajoke.mapper.JokeMapper;
-import com.frankybboy.qajoke.mapper.JokeMapperImpl;
 import com.frankybboy.qajoke.model.Joke;
 import com.frankybboy.qajoke.repository.JokeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,7 +30,7 @@ class JokeServiceImplTest {
     @Mock
     JokeRepository jokeRepository;
 
-    JokeMapper jokeMapper = new JokeMapperImpl();
+    JokeMapper jokeMapper = Mappers.getMapper(JokeMapper.class);
 
     JokeServiceImpl underTest;
 

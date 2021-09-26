@@ -3,6 +3,7 @@ package com.frankybboy.qajoke.mapper;
 import com.frankybboy.qajoke.dto.JokeDto;
 import com.frankybboy.qajoke.model.Joke;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +12,7 @@ class JokeMapperTest {
     static final String JOKE_QUESTION = "My question?";
     static final String JOKE_ANSWER = "My answer!";
 
-    JokeMapper underTest = new JokeMapperImpl();
+    JokeMapper underTest = Mappers.getMapper(JokeMapper.class);
 
     @Test
     void jokeToJokeDto() {

@@ -3,11 +3,12 @@ package com.frankybboy.qajoke.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.frankybboy.qajoke.dto.JokeDto;
-import com.frankybboy.qajoke.mapper.JokeMapperImpl;
+import com.frankybboy.qajoke.mapper.JokeMapper;
 import com.frankybboy.qajoke.model.Joke;
 import com.frankybboy.qajoke.repository.JokeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.web.server.ResponseStatusException;
@@ -35,7 +36,8 @@ class JokeServiceImplIT {
         simpleJoke1 = Joke.builder().question(JOKE_QUESTION_1).answer(JOKE_ANSWER_1).build();
         simpleJoke2 = Joke.builder().question(JOKE_QUESTION_2).answer(JOKE_ANSWER_2).build();
 
-        jokeService = new JokeServiceImpl(jokeRepository, new JokeMapperImpl());
+        jokeService = new JokeServiceImpl(jokeRepository,
+            Mappers.getMapper(JokeMapper.class));
     }
 
     @Test
