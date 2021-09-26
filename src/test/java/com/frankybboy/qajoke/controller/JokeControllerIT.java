@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class JokeControllerIT extends AbstractRestControllerTest {
+class JokeControllerIT extends AbstractRestControllerTest {
 
     private static final String JOKE_QUESTION_1 = "My question 1?";
     private static final String JOKE_ANSWER_1 = "My answer 1!";
@@ -46,7 +46,7 @@ public class JokeControllerIT extends AbstractRestControllerTest {
     }
 
     @Test
-    public void getListOfJokes() throws Exception {
+    void getListOfJokes() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get(JokeController.BASE_URL)

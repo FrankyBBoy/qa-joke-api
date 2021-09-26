@@ -27,7 +27,7 @@ public class JokeServiceImpl implements JokeService {
   @Override
   public List<JokeDto> getAllJokes() {
     return jokeRepository.findAll().stream()
-        .map(joke -> jokeMapper.jokeToJokeDto(joke))
+        .map(jokeMapper::jokeToJokeDto)
         .collect(Collectors.toList());
   }
 

@@ -137,10 +137,11 @@ class JokeServiceImplTest {
     void patchJokeNotFound() {
         // given
         when(jokeRepository.findById(anyLong())).thenReturn(Optional.empty());
+        JokeDto jokeToPatch = JokeDto.builder().build();
 
         // when
         Exception exception = assertThrows(ResponseStatusException.class, () -> {
-            underTest.patchJoke(1L, JokeDto.builder().build());
+            underTest.patchJoke(1L, jokeToPatch);
         });
 
         // then

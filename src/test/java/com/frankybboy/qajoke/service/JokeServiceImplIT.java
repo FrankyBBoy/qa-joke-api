@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @DataJpaTest
-public class JokeServiceImplIT {
+class JokeServiceImplIT {
 
     private static final String JOKE_QUESTION_1 = "My question 1?";
     private static final String JOKE_ANSWER_1 = "My answer 1!";
@@ -39,7 +39,7 @@ public class JokeServiceImplIT {
     }
 
     @Test
-    public void getAllJokes() {
+    void getAllJokes() {
         // given
         jokeRepository.save(simpleJoke1);
         jokeRepository.save(simpleJoke2);
@@ -55,7 +55,7 @@ public class JokeServiceImplIT {
     }
 
     @Test
-    public void getJokeById() {
+    void getJokeById() {
         // given
         Joke savedJoke = jokeRepository.save(simpleJoke1);
 
@@ -69,7 +69,7 @@ public class JokeServiceImplIT {
     }
 
     @Test
-    public void getJokeByIdNotFound() {
+    void getJokeByIdNotFound() {
         // given
         Long nonExistentId = 54321L;
 
@@ -84,7 +84,7 @@ public class JokeServiceImplIT {
     }
 
     @Test
-    public void createJoke() {
+    void createJoke() {
         // given
         int actualSize = jokeRepository.findAll().size();
         int expectedSize = actualSize + 1;
@@ -97,7 +97,7 @@ public class JokeServiceImplIT {
     }
 
     @Test
-    public void saveJoke() {
+    void saveJoke() {
         // given
         Joke jokeToUpdate = jokeRepository.save(simpleJoke1);
         String question = "Updated question?";
@@ -114,7 +114,7 @@ public class JokeServiceImplIT {
     }
 
     @Test
-    public void patchJoke() {
+    void patchJoke() {
         // given
         Joke jokeToPatch = jokeRepository.save(Joke.builder().question(JOKE_QUESTION_1).answer(JOKE_ANSWER_1).build());
         String patchedQuestion = "Patched question?";
@@ -130,7 +130,7 @@ public class JokeServiceImplIT {
     }
 
     @Test
-    public void deleteJokeById() {
+    void deleteJokeById() {
         // given
         Joke savedJoke = jokeRepository.save(simpleJoke1);
         int expectedSize = jokeRepository.findAll().size() - 1;
